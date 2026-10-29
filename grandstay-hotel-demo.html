@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrandStay Hotel Booking</title>
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f5f9;
+            color: #182338
+        }
+
+        header {
+            padding: 28px 6%;
+            background: linear-gradient(120deg, #142b49, #28617a);
+            color: white
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem
+        }
+
+        header span {
+            color: #7ce5d4
+        }
+
+        .container {
+            width: min(1000px, 90%);
+            margin: 28px auto
+        }
+
+        .notice {
+            background: #fff3d9;
+            border: 1px solid #f1d58c;
+            padding: 12px;
+            border-radius: 10px;
+            color: #654b00
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 22px;
+            margin-top: 22px
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e3e8ef;
+            border-radius: 15px;
+            padding: 22px
+        }
+
+        .room {
+            padding: 15px;
+            border: 1px solid #e0e7ef;
+            border-radius: 12px;
+            margin: 12px 0;
+            display: flex;
+            gap: 13px;
+            align-items: center;
+            cursor: pointer
+        }
+
+        .room.active {
+            border: 2px solid #188d87;
+            background: #f0fffc
+        }
+
+        .room .icon {
+            font-size: 2rem
+        }
+
+        .room h3 {
+            margin: 0 0 5px
+        }
+
+        .muted {
+            color: #6b7687;
+            font-size: .92rem
+        }
+
+        .price {
+            font-weight: bold;
+            color: #117e78
+        }
+
+        .fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        label {
+            font-size: .9rem;
+            font-weight: bold
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d4dce6;
+            border-radius: 8px;
+            margin-top: 5px
+        }
+
+        .summary {
+            background: #f4f8fb;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 18px
+        }
+
+        .summary p {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px
+        }
+
+        button {
+            width: 100%;
+            border: 0;
+            border-radius: 9px;
+            padding: 13px;
+            background: #168e83;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 16px
+        }
+
+        .status {
+            color: #08796f;
+            font-weight: bold;
+            min-height: 25px
+        }
+
+        @media(max-width:720px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .fields {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Grand<span>Stay</span> Hotel & Suites</h1>
+        <p>Find a comfortable place for your next stay.</p>
+    </header>
+
+    <main class="container">
+        <div class="notice"><b>Sample only:</b> This page does not check real room availability or save reservations.
+        </div>
+
+        <div class="grid">
+            <section class="card">
+                <h2>Choose Your Room</h2>
+                <p class="muted">Select a room to calculate the estimated price.</p>
+
+                <div class="room active" data-room="Standard Room" data-price="1800">
+                    <div class="icon">🛏️</div>
+                    <div>
+                        <h3>Standard Room</h3>
+                        <p class="muted">Comfortable room for 1–2 guests</p><span class="price">₱1,800 / night</span>
+                    </div>
+                </div>
+
+                <div class="room" data-room="Deluxe Room" data-price="2800">
+                    <div class="icon">🛌</div>
+                    <div>
+                        <h3>Deluxe Room</h3>
+                        <p class="muted">Extra space and a relaxing view</p><span class="price">₱2,800 / night</span>
+                    </div>
+                </div>
+
+                <div class="room" data-room="Family Suite" data-price="4200">
+                    <div class="icon">🏨</div>
+                    <div>
+                        <h3>Family Suite</h3>
+                        <p class="muted">Larger room for family stays</p><span class="price">₱4,200 / night</span>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="card">
+                <h2>Booking Details</h2>
+
+                <div class="fields">
+                    <label>Check-in<input type="date" id="checkin" required></label>
+                    <label>Check-out<input type="date" id="checkout" required></label>
+                    <label>Guests
+                        <select id="guests">
+                            <option>1</option>
+                            <option selected>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                        </select>
+                    </label>
+                    <label>Guest name<input id="guestName" placeholder="Full name"></label>
+                </div>
+
+                <div class="summary">
+                    <p><span>Room</span><b id="sumRoom">Standard Room</b></p>
+                    <p><span>Nights</span><b id="nights">1</b></p>
+                    <p><span>Price per night</span><b id="nightPrice">₱1,800</b></p>
+                    <hr>
+                    <p><strong>Estimated total</strong><strong id="total">₱1,800</strong></p>
+                </div>
+
+                <button id="book">Preview Reservation</button>
+                <p class="status" id="status" aria-live="polite"></p>
+            </aside>
+        </div>
+    </main>
+
+    <script>
+        let selected = { name: "Standard Room", price: 1800 };
+        const $ = id => document.getElementById(id);
+        const peso = n => "₱" + n.toLocaleString("en-PH");
+
+        function dateString(date) {
+            const adjusted = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+            return adjusted.toISOString().slice(0, 10);
+        }
+
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        const afterTomorrow = new Date(today);
+        afterTomorrow.setDate(today.getDate() + 2);
+
+        $("checkin").min = dateString(today);
+        $("checkin").value = dateString(tomorrow);
+        $("checkout").min = dateString(tomorrow);
+        $("checkout").value = dateString(afterTomorrow);
+
+        document.querySelectorAll(".room").forEach(room => {
+            room.addEventListener("click", () => {
+                document.querySelectorAll(".room").forEach(r => r.classList.remove("active"));
+                room.classList.add("active");
+
+                selected = {
+                    name: room.dataset.room,
+                    price: Number(room.dataset.price)
+                };
+
+                updateSummary();
+            });
+        });
+
+        function getNights() {
+            const start = new Date($("checkin").value + "T00:00:00");
+            const end = new Date($("checkout").value + "T00:00:00");
+            return Math.round((end - start) / 86400000);
+        }
+
+        function updateSummary() {
+            let nights = getNights();
+            if (!Number.isFinite(nights) || nights < 1) nights = 1;
+
+            $("sumRoom").textContent = selected.name;
+            $("nights").textContent = nights;
+            $("nightPrice").textContent = peso(selected.price);
+            $("total").textContent = peso(selected.price * nights);
+            $("status").textContent = "";
+        }
+
+        $("checkin").addEventListener("change", () => {
+            const date = new Date($("checkin").value + "T00:00:00");
+            date.setDate(date.getDate() + 1);
+            $("checkout").min = dateString(date);
+
+            if (new Date($("checkout").value + "T00:00:00") <=
+                new Date($("checkin").value + "T00:00:00")) {
+                $("checkout").value = dateString(date);
+            }
+
+            updateSummary();
+        });
+
+        $("checkout").addEventListener("change", updateSummary);
+        $("guests").addEventListener("change", updateSummary);
+
+        $("book").addEventListener("click", () => {
+            const name = $("guestName").value.trim();
+            const nights = getNights();
+
+            if (!name) {
+                $("status").textContent = "Please enter the guest name.";
+                return;
+            }
+
+            if (nights < 1) {
+                $("status").textContent = "Check-out must be after check-in.";
+                return;
+            }
+
+            $("status").textContent =
+                `Sample reservation prepared for ${name}: ${selected.name}, ` +
+                `${$("guests").value} guest(s), ${nights} night(s), estimated total ${$("total").textContent}.`;
+        });
+
+        updateSummary();
+    </script>
+</body>
+
+</html>

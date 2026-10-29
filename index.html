@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#08111f">
+    <meta name="description"
+        content="Personal portfolio of Sean Andrie Cubio, showcasing IT skills, projects, certificates, reflection, and career goals.">
+    <title>Sean Andrie Cubio | Portfolio</title>
+
+    <style>
+        :root {
+            --bg: #08111f;
+            --card: #101d30;
+            --card-light: #15253b;
+            --text: #f1f5f9;
+            --muted: #9aabc0;
+            --accent: #26d9c4;
+            --blue: #5795ff;
+            --border: rgba(255, 255, 255, .10);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 85px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8, 17, 31, .94);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: .88rem;
+            transition: .25s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: white;
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 7px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* GENERAL */
+
+        section {
+            padding: 85px 0;
+        }
+
+        .section-heading {
+            margin-bottom: 35px;
+        }
+
+        .eyebrow {
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: .8rem;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.3rem);
+            line-height: 1.12;
+            margin-bottom: 20px;
+        }
+
+        h1 span,
+        .section-heading h2 span {
+            color: var(--accent);
+        }
+
+        .section-heading h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 8px;
+        }
+
+        .hero p,
+        .section-intro {
+            color: var(--muted);
+            max-width: 650px;
+        }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 19px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: var(--card-light);
+            color: white;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #06131b;
+            font-weight: 800;
+            border-color: var(--accent);
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+        }
+
+        .panel h3 {
+            margin-bottom: 12px;
+        }
+
+        .panel p {
+            color: var(--muted);
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 570px;
+            display: flex;
+            align-items: center;
+            background:
+                radial-gradient(circle at 80% 25%, rgba(38, 217, 196, .12), transparent 30%),
+                radial-gradient(circle at 15% 70%, rgba(87, 149, 255, .10), transparent 30%);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.4fr .8fr;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .profile-frame {
+            width: min(310px, 100%);
+            aspect-ratio: 1;
+            margin: auto;
+            border: 2px solid var(--accent);
+            border-radius: 28px;
+            padding: 10px;
+            transform: rotate(2deg);
+            background: var(--card);
+            box-shadow: 0 20px 70px rgba(38, 217, 196, .10);
+        }
+
+        .profile-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            transform: rotate(-2deg);
+        }
+
+        .profile-placeholder {
+            display: grid;
+            place-items: center;
+            height: 100%;
+            text-align: center;
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        /* ABOUT */
+
+        .about-grid,
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        /* SKILLS */
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .skill {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 19px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+            transition: .25s;
+        }
+
+        .skill:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        /* PROJECTS */
+
+        .projects-section {
+            background: rgba(255, 255, 255, .015);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .project-card {
+            overflow: hidden;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            transition: .3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(38, 217, 196, .5);
+        }
+
+        .project-image {
+            height: 205px;
+            background: #18263a;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .4s;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.04);
+        }
+
+        .project-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .project-body h3 {
+            margin-bottom: 10px;
+        }
+
+        .project-body p {
+            color: var(--muted);
+            font-size: .93rem;
+            margin-bottom: 18px;
+            flex: 1;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            font-size: .75rem;
+            padding: 4px 9px;
+            border-radius: 6px;
+            color: var(--accent);
+            background: rgba(38, 217, 196, .09);
+            border: 1px solid rgba(38, 217, 196, .15);
+        }
+
+        .project-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .project-buttons .btn {
+            flex: 1;
+            font-size: .87rem;
+            padding: 10px;
+        }
+
+        /* CERTIFICATES */
+
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .certificate {
+            padding: 12px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .certificate img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 8px;
+        }
+
+        .certificate h3 {
+            font-size: 1rem;
+            margin: 12px 0 4px;
+        }
+
+        .certificate p {
+            color: var(--muted);
+            font-size: .88rem;
+        }
+
+        /* REFLECTION AND CAREER */
+
+        .text-panel {
+            max-width: 850px;
+        }
+
+        .text-panel p {
+            margin-bottom: 15px;
+            color: var(--muted);
+        }
+
+        .career-list {
+            margin: 15px 0 0 22px;
+            color: var(--muted);
+        }
+
+        .career-list li {
+            padding: 5px 0;
+        }
+
+        /* CONTACT */
+
+        .contact-details p {
+            color: var(--muted);
+            margin: 12px 0;
+            overflow-wrap: anywhere;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 13px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 13px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: #0b1728;
+            color: white;
+            font: inherit;
+        }
+
+        .contact-form textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 25px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: .9rem;
+        }
+
+        /* LIVE DEMO MODAL */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, .82);
+            backdrop-filter: blur(7px);
+        }
+
+        .modal.show {
+            display: flex;
+            animation: fadeIn .2s ease;
+        }
+
+        .modal-box {
+            width: min(1050px, 100%);
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            background: #0c1829;
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 100px rgba(0, 0, 0, .5);
+            animation: slideUp .25s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title-wrap {
+            min-width: 0;
+        }
+
+        .modal-title-wrap h2 {
+            font-size: 1.15rem;
+            overflow-wrap: anywhere;
+        }
+
+        .modal-title-wrap p {
+            color: var(--muted);
+            font-size: .8rem;
+        }
+
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border);
+            background: var(--card-light);
+            color: white;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            background: #a82e43;
+        }
+
+        .browser-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: #101f33;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .browser-dots span {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #718096;
+        }
+
+        .browser-address {
+            min-width: 0;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 6px 10px;
+            border-radius: 6px;
+            background: #07111e;
+            color: #a9bbd0;
+            font-size: .8rem;
+        }
+
+        .preview-wrap {
+            position: relative;
+            min-height: 250px;
+            height: min(62vh, 650px);
+            background: #fff;
+        }
+
+        .preview-frame {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: white;
+        }
+
+        .preview-message {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+            color: #dbe7f5;
+            background: #0c1829;
+        }
+
+        .preview-message.visible {
+            display: flex;
+        }
+
+        .preview-message-inner {
+            max-width: 470px;
+        }
+
+        .preview-message h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .preview-message p {
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+
+        .modal-footer {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--border);
+        }
+
+        .modal-footer small {
+            color: var(--muted);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: .8rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .hero-content {
+                gap: 30px;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                padding: 20px 5%;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 17px;
+                background: #0b1728;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 650px) {
+            section {
+                padding: 60px 0;
+            }
+
+            .hero-content,
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero p {
+                margin: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .profile-frame {
+                width: 230px;
+                grid-row: 1;
+            }
+
+            .projects-grid,
+            .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-image {
+                height: 220px;
+            }
+
+            .modal {
+                padding: 8px;
+            }
+
+            .modal-box {
+                max-height: 96vh;
+            }
+
+            .preview-wrap {
+                height: 55vh;
+                min-height: 220px;
+            }
+
+            .modal-footer {
+                align-items: stretch;
+            }
+
+            .modal-actions {
+                width: 100%;
+            }
+
+            .modal-actions .btn {
+                flex: 1;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header>
+        <nav class="navbar container">
+            <a href="#home" class="logo">SEAN<span>.</span></a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false"
+                aria-controls="navLinks">
+                ☰ Menu
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#certificates">Certificates</a></li>
+                <li><a href="#reflection">Reflection</a></li>
+                <li><a href="#career">Career Plan</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero" id="home">
+            <div class="container hero-content">
+                <div>
+                    <p class="eyebrow">Welcome to my portfolio</p>
+                    <h1>Hi, I'm Sean Andrie <span>Cubio.</span></h1>
+
+                    <p>
+                        A Bachelor of Science in Information Technology student
+                        interested in web development, system development, and
+                        creating useful digital solutions.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">View My Projects ↗</a>
+                        <a href="#contact" class="btn">Contact Me</a>
+                    </div>
+                </div>
+
+                <div class="profile-frame">
+                    <img src="assets/images/profile.png" alt="Sean Andrie Cubio profile photo"
+                        onerror="this.outerHTML='<div class=&quot;profile-placeholder&quot;>ADD YOUR<br>PROFILE PHOTO</div>';">
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">Get to know me</p>
+                    <h2>About <span>Me</span></h2>
+                    <p class="section-intro">
+                        A short introduction about my background and interests.
+                    </p>
+                </div>
+
+                <div class="about-grid">
+                    <div class="panel">
+                        <h3>Who I Am</h3>
+                        <p>
+                            I am an Information Technology student learning how
+                            to design and develop websites and information systems.
+                            I enjoy improving my programming skills and working
+                            on projects that solve practical problems.
+                        </p>
+                    </div>
+
+                    <div class="panel">
+                        <h3>My Goal</h3>
+                        <p>
+                            My goal is to become a skilled IT professional.
+                            I want to improve my technical knowledge, gain
+                            practical experience, and build reliable systems
+                            that are easy for people to use.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">What I am learning</p>
+                    <h2>My <span>Skills</span></h2>
+                </div>
+
+                <div class="skills-grid">
+                    <div class="skill">HTML5</div>
+                    <div class="skill">CSS3</div>
+                    <div class="skill">JavaScript</div>
+                    <div class="skill">PHP</div>
+                    <div class="skill">MySQL</div>
+                    <div class="skill">Responsive Design</div>
+                    <div class="skill">System Development</div>
+                    <div class="skill">Problem Solving</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section class="projects-section" id="projects">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">My work</p>
+                    <h2>Featured <span>Projects</span></h2>
+                    <p class="section-intro">
+                        Select Live Demo to preview a project in a popup.
+                        You can also open each demo in a separate tab.
+                    </p>
+                </div>
+
+                <div class="projects-grid">
+
+                    <!-- PROJECT 1 -->
+                    <article class="project-card">
+                        <div class="project-image">
+                            <img src="assets/images/tapseafo.jpg" alt="Food Ordering System preview"
+                                onerror="this.style.display='none';">
+                        </div>
+
+                        <div class="project-body">
+                            <h3>Food Ordering System</h3>
+                            <p>
+                                A web-based food ordering system designed to
+                                help customers browse meals and place orders.
+                                It can also support inventory management and
+                                AI-powered meal recommendations.
+                            </p>
+
+                            <div class="tags">
+                                <span class="tag">HTML</span>
+                                <span class="tag">CSS</span>
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">AI</span>
+                            </div>
+
+                            <div class="project-buttons">
+                                <button type="button" class="btn btn-primary live-demo"
+                                    data-title="Food Ordering System" data-description="Food ordering website preview"
+                                    data-demo="food-ordering-demo.html">
+                                    Live Demo ↗
+                                </button>
+
+                                <button type="button" class="btn project-details" data-title="Food Ordering System"
+                                    data-description="This project is designed to make food ordering more convenient. The sample demo includes a menu and a shopping cart. A full version may include order tracking, inventory management, and AI-powered meal recommendations.">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- PROJECT 2 -->
+                    <article class="project-card">
+                        <div class="project-image">
+                            <img src="assets/images/hotel_booking.jpg" alt="GrandStay Hotel Booking System preview"
+                                onerror="this.style.display='none';">
+                        </div>
+
+                        <div class="project-body">
+                            <h3>GrandStay Hotel Booking</h3>
+                            <p>
+                                A hotel reservation system concept that allows
+                                users to explore rooms, submit booking details,
+                                and review reservation information.
+                            </p>
+
+                            <div class="tags">
+                                <span class="tag">HTML</span>
+                                <span class="tag">CSS</span>
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">PHP</span>
+                            </div>
+
+                            <div class="project-buttons">
+                                <button type="button" class="btn btn-primary live-demo"
+                                    data-title="GrandStay Hotel Booking"
+                                    data-description="Hotel booking website preview"
+                                    data-demo="grandstay-hotel-demo.html">
+                                    Live Demo ↗
+                                </button>
+
+                                <button type="button" class="btn project-details" data-title="GrandStay Hotel Booking"
+                                    data-description="GrandStay is a hotel reservation project concept. The sample demo allows users to explore room options and try a reservation form. A production system would require a database and server-side booking management.">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- PROJECT 3 -->
+                    <article class="project-card">
+                        <div class="project-image">
+                            <img src="assets/images/arduino_dispenser.jpg" alt="Arduino Water Dispenser preview"
+                                onerror="this.style.display='none';">
+                        </div>
+
+                        <div class="project-body">
+                            <h3>Arduino Water Dispenser</h3>
+                            <p>
+                                A hardware project concept focused on automating
+                                water dispensing using Arduino and compatible
+                                electronic components.
+                            </p>
+
+                            <div class="tags">
+                                <span class="tag">Arduino</span>
+                                <span class="tag">Electronics</span>
+                                <span class="tag">Hardware</span>
+                            </div>
+
+                            <div class="project-buttons">
+                                <button type="button" class="btn btn-primary live-demo"
+                                    data-title="Arduino Water Dispenser"
+                                    data-description="Arduino water dispenser simulation"
+                                    data-demo="arduino-water-dispenser-demo.html">
+                                    Live Demo ↗
+                                </button>
+
+                                <button type="button" class="btn project-details" data-title="Arduino Water Dispenser"
+                                    data-description="This project explores an automated water dispenser using Arduino and suitable sensors or a pump. The webpage demo is a browser simulation, not a direct connection to physical Arduino hardware.">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CERTIFICATES -->
+        <section id="certificates">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">Achievements</p>
+                    <h2>My <span>Certificates</span></h2>
+                    <p class="section-intro">
+                        Certificates and training records I want to showcase.
+                    </p>
+                </div>
+
+                <div class="certificates-grid">
+                    <article class="certificate">
+                        <img src="assets/images/andrie1.jpg" alt="Certificate 1" onerror="this.style.display='none';">
+                        <h3>Certificate 1</h3>
+                        <p>Replace with the actual certificate title.</p>
+                    </article>
+
+                    <article class="certificate">
+                        <img src="assets/images/andrie2.jpg" alt="Certificate 2" onerror="this.style.display='none';">
+                        <h3>Certificate 2</h3>
+                        <p>Replace with the actual certificate title.</p>
+                    </article>
+
+                    <article class="certificate">
+                        <img src="assets/images/andrie3.jpg" alt="Certificate 3" onerror="this.style.display='none';">
+                        <h3>Certificate 3</h3>
+                        <p>Replace with the actual certificate title.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- REFLECTION -->
+        <section id="reflection">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">What I have learned</p>
+                    <h2>My <span>Reflection</span></h2>
+                </div>
+
+                <div class="panel text-panel">
+                    <p>
+                        As an Information Technology student, I have learned
+                        that creating a website or system takes more than
+                        writing code. It also requires planning, patience,
+                        testing, and problem-solving.
+                    </p>
+
+                    <p>
+                        Working on projects helps me understand how different
+                        technologies work together. I also learn from errors
+                        because they help me identify what needs to be improved.
+                    </p>
+
+                    <p>
+                        I know that I still have many things to learn, but I
+                        will continue practicing my skills and improving my
+                        projects as I prepare for my future career in IT.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAREER PLAN -->
+        <section id="career">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">My future</p>
+                    <h2>Career <span>Plan</span></h2>
+                </div>
+
+                <div class="panel text-panel">
+                    <p>
+                        My career goal is to work in the IT industry and continue
+                        developing my technical skills.
+                    </p>
+
+                    <ul class="career-list">
+                        <li><strong>Short-term:</strong> Finish my studies and improve my programming skills.</li>
+                        <li><strong>Next step:</strong> Build more projects and gain practical experience.</li>
+                        <li><strong>Long-term:</strong> Become a professional web developer or software developer.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">Get in touch</p>
+                    <h2>Contact <span>Me</span></h2>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="panel contact-details">
+                        <h3>Let's Connect</h3>
+
+                        <p>
+                            Feel free to contact me about my projects,
+                            collaboration, or professional opportunities.
+                        </p>
+
+                        <p>
+                            <strong>Email:</strong>
+                            <a href="mailto:sean.andrie@gmail.com">sean.andrie@gmail.com</a>
+                        </p>
+
+                        <p><strong>Portfolio:</strong> Sean Andrie Cubio</p>
+                    </div>
+
+                    <div class="panel">
+                        <form class="contact-form" id="contactForm">
+                            <input type="text" id="contactName" placeholder="Your name" autocomplete="name" required>
+
+                            <input type="email" id="contactEmail" placeholder="Your email" autocomplete="email"
+                                required>
+
+                            <textarea id="contactMessage" placeholder="Your message" required></textarea>
+
+                            <button class="btn btn-primary" type="submit">
+                                Send Message
+                            </button>
+
+                            <small style="color:var(--muted)">
+                                This form opens your email application.
+                            </small>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>© <span id="currentYear"></span> Sean Andrie Cubio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- LIVE DEMO POPUP -->
+    <div class="modal" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <h2 id="modalTitle">Project Live Demo</h2>
+                    <p id="modalDescription">Preview the selected project</p>
+                </div>
+
+                <button type="button" class="modal-close" id="closeModal" aria-label="Close popup">×</button>
+            </div>
+
+            <div class="browser-bar">
+                <div class="browser-dots" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="browser-address" id="browserAddress">
+                    Project preview
+                </div>
+            </div>
+
+            <div class="preview-wrap">
+                <iframe id="demoFrame" class="preview-frame" title="Live project preview" src="about:blank"
+                    loading="lazy" referrerpolicy="strict-origin-when-cross-origin">
+                </iframe>
+
+                <div class="preview-message" id="previewMessage">
+                    <div class="preview-message-inner">
+                        <h3 id="previewMessageTitle">Loading project preview...</h3>
+
+                        <p id="previewMessageText">
+                            Please wait while the project loads.
+                        </p>
+
+                        <button type="button" class="btn btn-primary" id="openFromMessage">
+                            Open Demo in New Tab ↗
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <small>
+                    Some websites block embedded previews. Use Open Demo to view them separately.
+                </small>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn" id="reloadDemo">
+                        Reload Preview ↻
+                    </button>
+
+                    <a href="#" class="btn btn-primary" id="openDemoNewTab" target="_blank" rel="noopener noreferrer">
+                        Open Demo ↗
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // MOBILE NAVIGATION
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", function () {
+            const isOpen = navLinks.classList.toggle("open");
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+        });
+
+        navLinks.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
+            });
+        });
+
+        // CURRENT YEAR
+        document.getElementById("currentYear").textContent =
+            new Date().getFullYear();
+
+        // MODAL ELEMENTS
+        const demoModal = document.getElementById("demoModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalDescription = document.getElementById("modalDescription");
+        const browserAddress = document.getElementById("browserAddress");
+        const demoFrame = document.getElementById("demoFrame");
+        const previewMessage = document.getElementById("previewMessage");
+        const previewMessageTitle = document.getElementById("previewMessageTitle");
+        const previewMessageText = document.getElementById("previewMessageText");
+        const openDemoNewTab = document.getElementById("openDemoNewTab");
+        const openFromMessage = document.getElementById("openFromMessage");
+        const closeModalButton = document.getElementById("closeModal");
+        const reloadDemoButton = document.getElementById("reloadDemo");
+
+        let currentDemoUrl = "";
+        let previousFocus = null;
+        let loadTimer = null;
+
+        // Only allow HTTP(S) URLs and local HTML demo files.
+        function isValidDemoUrl(value) {
+            if (!value) return false;
+
+            try {
+                const url = new URL(value, window.location.href);
+
+                const isWebUrl =
+                    url.protocol === "https:" || url.protocol === "http:";
+
+                const isLocalHtml =
+                    url.origin === window.location.origin &&
+                    !url.pathname.endsWith("/") &&
+                    url.pathname.toLowerCase().endsWith(".html");
+
+                return isWebUrl || isLocalHtml;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        function showPreviewMessage(title, message, showOpenButton) {
+            previewMessageTitle.textContent = title;
+            previewMessageText.textContent = message;
+            previewMessage.classList.add("visible");
+
+            openFromMessage.style.display =
+                showOpenButton ? "inline-flex" : "none";
+        }
+
+        function hidePreviewMessage() {
+            previewMessage.classList.remove("visible");
+        }
+
+        function clearLoadTimer() {
+            if (loadTimer) {
+                clearTimeout(loadTimer);
+                loadTimer = null;
+            }
+        }
+
+        function openProjectModal(button) {
+            previousFocus = document.activeElement;
+
+            const title = button.dataset.title || "Project Demo";
+            const description = button.dataset.description || "";
+            const demoUrl = (button.dataset.demo || "").trim();
+
+            currentDemoUrl = isValidDemoUrl(demoUrl)
+                ? new URL(demoUrl, window.location.href).href
+                : "";
+
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+
+            demoModal.classList.add("show");
+            demoModal.setAttribute("aria-hidden", "false");
+            document.body.classList.add("modal-open");
+            closeModalButton.focus();
+
+            clearLoadTimer();
+
+            if (!currentDemoUrl) {
+                demoFrame.src = "about:blank";
+                browserAddress.textContent = "Demo URL not configured";
+                openDemoNewTab.style.display = "none";
+
+                showPreviewMessage(
+                    "Your demo link is not set yet",
+                    "Check the data-demo attribute on this project's button.",
+                    false
+                );
+
+                return;
+            }
+
+            browserAddress.textContent = currentDemoUrl;
+            openDemoNewTab.href = currentDemoUrl;
+            openDemoNewTab.style.display = "inline-flex";
+
+            showPreviewMessage(
+                "Loading project preview...",
+                "If the preview does not appear, use Open Demo in New Tab.",
+                true
+            );
+
+            demoFrame.onload = function () {
+                clearLoadTimer();
+
+                if (currentDemoUrl && demoModal.classList.contains("show")) {
+                    hidePreviewMessage();
+                }
+            };
+
+            demoFrame.onerror = function () {
+                clearLoadTimer();
+
+                showPreviewMessage(
+                    "Preview unavailable",
+                    "The page could not be loaded in this popup. Try opening it in a new tab.",
+                    true
+                );
+            };
+
+            demoFrame.src = currentDemoUrl;
+
+            // A timeout is only a fallback. Some browsers fire iframe load
+            // even when a remote website prevents its content from displaying.
+            loadTimer = setTimeout(function () {
+                if (demoModal.classList.contains("show") &&
+                    previewMessage.classList.contains("visible")) {
+                    showPreviewMessage(
+                        "Still waiting for the preview?",
+                        "The website may block embedded viewing. Try opening it in a new tab.",
+                        true
+                    );
+                }
+            }, 8000);
+        }
+
+        function openDetailsModal(button) {
+            previousFocus = document.activeElement;
+
+            clearLoadTimer();
+            currentDemoUrl = "";
+
+            modalTitle.textContent =
+                button.dataset.title || "Project Details";
+
+            modalDescription.textContent = "Project information";
+            browserAddress.textContent = "Project details";
+
+            demoFrame.onload = null;
+            demoFrame.onerror = null;
+            demoFrame.src = "about:blank";
+
+            openDemoNewTab.style.display = "none";
+
+            showPreviewMessage(
+                button.dataset.title || "Project Details",
+                button.dataset.description || "No additional project details available.",
+                false
+            );
+
+            demoModal.classList.add("show");
+            demoModal.setAttribute("aria-hidden", "false");
+            document.body.classList.add("modal-open");
+            closeModalButton.focus();
+        }
+
+        function closeProjectModal() {
+            clearLoadTimer();
+
+            demoModal.classList.remove("show");
+            demoModal.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("modal-open");
+
+            demoFrame.onload = null;
+            demoFrame.onerror = null;
+            demoFrame.src = "about:blank";
+
+            currentDemoUrl = "";
+
+            if (previousFocus && typeof previousFocus.focus === "function") {
+                previousFocus.focus();
+            }
+        }
+
+        // LIVE DEMO BUTTONS
+        document.querySelectorAll(".live-demo").forEach(function (button) {
+            button.addEventListener("click", function () {
+                openProjectModal(button);
+            });
+        });
+
+        // PROJECT DETAILS BUTTONS
+        document.querySelectorAll(".project-details").forEach(function (button) {
+            button.addEventListener("click", function () {
+                openDetailsModal(button);
+            });
+        });
+
+        // CLOSE BUTTON
+        closeModalButton.addEventListener("click", closeProjectModal);
+
+        // CLOSE WHEN CLICKING THE BACKGROUND
+        demoModal.addEventListener("click", function (event) {
+            if (event.target === demoModal) {
+                closeProjectModal();
+            }
+        });
+
+        // CLOSE WITH ESCAPE
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape" &&
+                demoModal.classList.contains("show")) {
+                closeProjectModal();
+            }
+        });
+
+        // OPEN THE DEMO FROM THE FALLBACK MESSAGE
+        openFromMessage.addEventListener("click", function () {
+            if (currentDemoUrl) {
+                window.open(currentDemoUrl, "_blank", "noopener,noreferrer");
+            }
+        });
+
+        // RELOAD PREVIEW
+        reloadDemoButton.addEventListener("click", function () {
+            if (!currentDemoUrl) {
+                showPreviewMessage(
+                    "Demo link needed",
+                    "Check the data-demo attribute on the project button.",
+                    false
+                );
+                return;
+            }
+
+            clearLoadTimer();
+
+            showPreviewMessage(
+                "Reloading preview...",
+                "Please wait while the project reloads.",
+                true
+            );
+
+            demoFrame.src = currentDemoUrl;
+
+            loadTimer = setTimeout(function () {
+                if (demoModal.classList.contains("show") &&
+                    previewMessage.classList.contains("visible")) {
+                    showPreviewMessage(
+                        "Preview not appearing?",
+                        "Try opening the demo in a separate browser tab.",
+                        true
+                    );
+                }
+            }, 8000);
+        });
+
+        // CONTACT FORM
+        // This opens the visitor's email application. It does not send
+        // messages directly or store submissions in a database.
+        document.getElementById("contactForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById("contactName").value.trim();
+            const email = document.getElementById("contactEmail").value.trim();
+            const message = document.getElementById("contactMessage").value.trim();
+
+            const recipient = "sean.andrie@gmail.com";
+            const subject = encodeURIComponent("Portfolio message from " + name);
+
+            const body = encodeURIComponent(
+                "Name: " + name +
+                "\nEmail: " + email +
+                "\n\nMessage:\n" + message
+            );
+
+            window.location.href =
+                "mailto:" + recipient +
+                "?subject=" + subject +
+                "&body=" + body;
+        });
+    </script>
+
+</body>
+
+</html>

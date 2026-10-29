@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TapSeafood | Food Ordering System</title>
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172033
+        }
+
+        header {
+            background: #102b35;
+            color: white;
+            padding: 24px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px
+        }
+
+        header h1 {
+            margin: 0;
+            color: #42e0c2
+        }
+
+        header p {
+            margin: 5px 0;
+            color: #c5d8df
+        }
+
+        .container {
+            width: min(1100px, 90%);
+            margin: 28px auto
+        }
+
+        .notice {
+            background: #fff5d9;
+            padding: 12px;
+            border-radius: 9px;
+            color: #684e00
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 22px;
+            margin-top: 22px
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 24px #1720330d
+        }
+
+        .items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px
+        }
+
+        .item {
+            border: 1px solid #e4eaf0;
+            border-radius: 12px;
+            padding: 16px
+        }
+
+        .emoji {
+            font-size: 2.5rem
+        }
+
+        .item h3 {
+            margin: 8px 0
+        }
+
+        .muted {
+            color: #667085;
+            font-size: .92rem
+        }
+
+        .price {
+            font-weight: bold;
+            color: #078a78
+        }
+
+        button {
+            border: 0;
+            border-radius: 8px;
+            padding: 10px 13px;
+            cursor: pointer;
+            font-weight: bold;
+            background: #12bfa6;
+            color: #082b2a
+        }
+
+        .secondary {
+            background: #eaf0f5;
+            color: #243044
+        }
+
+        .cart-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #e8edf2;
+            padding: 12px 0
+        }
+
+        .total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            margin: 18px 0
+        }
+
+        input {
+            width: 100%;
+            padding: 11px;
+            margin: 8px 0 14px;
+            border: 1px solid #d7e0e8;
+            border-radius: 8px
+        }
+
+        .full {
+            width: 100%
+        }
+
+        .status {
+            min-height: 24px;
+            color: #087b69;
+            font-weight: bold;
+            margin-top: 12px
+        }
+
+        @media(max-width:700px) {
+            .layout {
+                grid-template-columns: 1fr
+            }
+
+            .items {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>TapSeafood</h1>
+            <p>Fresh meals · Simple online ordering</p>
+        </div>
+        <strong>LIVE DEMO</strong>
+    </header>
+
+    <main class="container">
+        <div class="notice"><b>Demo mode:</b> This sample does not process real payments or send orders to a restaurant.
+        </div>
+        <div class="layout">
+            <section class="card">
+                <h2>Our Menu</h2>
+                <p class="muted">Choose your favorite meal.</p>
+                <div class="items" id="items"></div>
+            </section>
+
+            <aside class="card">
+                <h2>Your Order</h2>
+                <div id="cartItems">
+                    <p class="muted">Your cart is empty.</p>
+                </div>
+                <div class="total"><span>Total</span><span id="total">₱0.00</span></div>
+
+                <label for="customer">Customer name</label>
+                <input id="customer" placeholder="Enter your name">
+
+                <button class="full" id="checkout">Place Sample Order</button>
+                <div class="status" id="status" aria-live="polite"></div>
+                <button class="secondary full" id="clear">Clear Cart</button>
+            </aside>
+        </div>
+    </main>
+
+    <script>
+        const menu = [
+            { id: 1, name: "Classic Silog", desc: "Garlic rice, egg, and savory meat.", price: 99, emoji: "🍳" },
+            { id: 2, name: "Seafood Rice Bowl", desc: "Rice bowl with seafood toppings.", price: 149, emoji: "🍤" },
+            { id: 3, name: "Chicken Silog", desc: "Chicken, egg, and garlic rice.", price: 129, emoji: "🍗" },
+            { id: 4, name: "Bangus Silog", desc: "Milkfish, egg, and garlic rice.", price: 119, emoji: "🐟" }
+        ];
+
+        let cart = {};
+
+        const money = amount => "₱" + amount.toFixed(2);
+
+        document.getElementById("items").innerHTML = menu.map(item => `
+  <article class="item">
+    <div class="emoji">${item.emoji}</div>
+    <h3>${item.name}</h3>
+    <p class="muted">${item.desc}</p>
+    <p class="price">${money(item.price)}</p>
+    <button onclick="addItem(${item.id})">Add to Order +</button>
+  </article>
+`).join("");
+
+        function addItem(id) {
+            cart[id] = (cart[id] || 0) + 1;
+            renderCart();
+        }
+
+        function changeQuantity(id, amount) {
+            cart[id] = (cart[id] || 0) + amount;
+            if (cart[id] <= 0) delete cart[id];
+            renderCart();
+        }
+
+        function renderCart() {
+            const keys = Object.keys(cart);
+            const cartItems = document.getElementById("cartItems");
+
+            if (!keys.length) {
+                cartItems.innerHTML = '<p class="muted">Your cart is empty.</p>';
+            } else {
+                cartItems.innerHTML = keys.map(key => {
+                    const item = menu.find(m => m.id == key);
+                    return `
+        <div class="cart-line">
+          <div>
+            <b>${item.name}</b>
+            <br><span class="muted">${money(item.price)} each</span>
+          </div>
+          <div>
+            <button class="secondary" onclick="changeQuantity(${item.id},-1)">−</button>
+            ${cart[key]}
+            <button class="secondary" onclick="changeQuantity(${item.id},1)">+</button>
+            <br><b>${money(item.price * cart[key])}</b>
+          </div>
+        </div>`;
+                }).join("");
+            }
+
+            const total = keys.reduce((sum, key) => {
+                return sum + menu.find(m => m.id == key).price * cart[key];
+            }, 0);
+
+            document.getElementById("total").textContent = money(total);
+            document.getElementById("status").textContent = "";
+        }
+
+        document.getElementById("checkout").addEventListener("click", () => {
+            const name = document.getElementById("customer").value.trim();
+            const status = document.getElementById("status");
+
+            if (!name) {
+                status.textContent = "Please enter your name.";
+                return;
+            }
+
+            if (!Object.keys(cart).length) {
+                status.textContent = "Please add at least one meal.";
+                return;
+            }
+
+            status.textContent =
+                `Sample order created for ${name}! Total: ${document.getElementById("total").textContent}.`;
+        });
+
+        document.getElementById("clear").addEventListener("click", () => {
+            cart = {};
+            renderCart();
+        });
+
+        renderCart();
+    </script>
+</body>
+
+</html>

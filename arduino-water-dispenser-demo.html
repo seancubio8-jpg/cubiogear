@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Water Dispenser Simulator</title>
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #08111f;
+            color: #eef6ff
+        }
+
+        header {
+            padding: 26px 6%;
+            background: #101d30;
+            border-bottom: 1px solid #2b3b50
+        }
+
+        header h1 {
+            margin: 0;
+            color: #26d9c4
+        }
+
+        header p {
+            color: #a5b5c8;
+            margin-bottom: 0
+        }
+
+        .container {
+            width: min(950px, 90%);
+            margin: 28px auto
+        }
+
+        .notice {
+            background: #302a15;
+            border: 1px solid #74652c;
+            color: #ffe8a1;
+            padding: 12px 14px;
+            border-radius: 10px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin-top: 22px
+        }
+
+        .card {
+            background: #101d30;
+            border: 1px solid #29394e;
+            border-radius: 16px;
+            padding: 22px
+        }
+
+        .machine {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 22px
+        }
+
+        .tank {
+            height: 220px;
+            width: 120px;
+            border: 5px solid #90a4ba;
+            border-radius: 18px 18px 10px 10px;
+            position: relative;
+            overflow: hidden;
+            background: #07111e
+        }
+
+        .water {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(#26d9c488, #26d9c4);
+            transition: height .4s
+        }
+
+        .tank-label {
+            position: absolute;
+            z-index: 2;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            font-weight: bold;
+            color: #06131b
+        }
+
+        .machine-body {
+            height: 185px;
+            width: 115px;
+            border-radius: 15px;
+            background: #24374d;
+            border: 2px solid #61758b
+        }
+
+        .screen {
+            margin: 18px 12px;
+            padding: 10px 3px;
+            text-align: center;
+            background: #07111e;
+            color: #26d9c4;
+            border-radius: 6px;
+            font-size: .85rem
+        }
+
+        .tap {
+            width: 35px;
+            height: 25px;
+            background: #8ba1b6;
+            border-radius: 5px;
+            margin: 15px auto
+        }
+
+        .cup {
+            width: 42px;
+            height: 48px;
+            border: 3px solid #dce8f4;
+            border-top: 0;
+            border-radius: 0 0 9px 9px;
+            margin: auto
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .stat {
+            background: #0a1626;
+            border: 1px solid #283a50;
+            border-radius: 10px;
+            padding: 14px
+        }
+
+        .stat small {
+            color: #9aabc0
+        }
+
+        .stat h2 {
+            margin: 5px 0;
+            color: #26d9c4
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 17px
+        }
+
+        button {
+            flex: 1;
+            min-width: 110px;
+            padding: 12px;
+            border: 0;
+            border-radius: 9px;
+            background: #26d9c4;
+            color: #06131b;
+            font-weight: bold;
+            cursor: pointer
+        }
+
+        button.secondary {
+            background: #24374d;
+            color: #fff;
+            border: 1px solid #50647b
+        }
+
+        button:disabled {
+            opacity: .45;
+            cursor: not-allowed
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #0a1626;
+            color: #a5b5c8;
+            min-height: 46px
+        }
+
+        .status.active {
+            color: #26d9c4
+        }
+
+        .levelbar {
+            height: 12px;
+            background: #26364b;
+            border-radius: 99px;
+            overflow: hidden
+        }
+
+        .levelbar div {
+            height: 100%;
+            width: 70%;
+            background: #26d9c4;
+            transition: width .3s
+        }
+
+        @media(max-width:700px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .machine {
+                gap: 14px
+            }
+
+            .tank {
+                width: 100px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Arduino Water Dispenser</h1>
+        <p>Interactive browser-based hardware simulation</p>
+    </header>
+
+    <main class="container">
+        <div class="notice"><b>Simulation mode:</b> This page does not connect to a real Arduino, pump, or sensor.</div>
+
+        <div class="grid">
+            <section class="card">
+                <h2>Dispenser Preview</h2>
+                <div class="machine">
+                    <div class="tank">
+                        <div class="water" id="water"></div>
+                        <div class="tank-label" id="tankLabel">70%</div>
+                    </div>
+
+                    <div class="machine-body">
+                        <div class="screen" id="screen">READY</div>
+                        <div class="tap"></div>
+                        <div class="cup"></div>
+                    </div>
+                </div>
+                <p style="color:#9aabc0;text-align:center">Tank level visualization</p>
+            </section>
+
+            <section class="card">
+                <h2>Control Panel</h2>
+
+                <div class="stats">
+                    <div class="stat">
+                        <small>Water level</small>
+                        <h2 id="level">70%</h2>
+                        <div class="levelbar">
+                            <div id="levelBar"></div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <small>Dispensed</small>
+                        <h2 id="dispensed">0 mL</h2>
+                        <small>Current session</small>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button id="start">Start Dispensing</button>
+                    <button class="secondary" id="stop" disabled>Stop</button>
+                    <button class="secondary" id="refill">Refill Tank</button>
+                </div>
+
+                <div class="status" id="status" aria-live="polite">
+                    System ready. Press Start Dispensing to simulate water flow.
+                </div>
+
+                <p style="color:#9aabc0;font-size:.9rem">
+                    For real hardware, use appropriate sensors and a pump with a properly designed Arduino circuit.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        let level = 70;
+        let dispensed = 0;
+        let running = false;
+        let timer = null;
+
+        const $ = id => document.getElementById(id);
+
+        function render() {
+            $("level").textContent = level + "%";
+            $("tankLabel").textContent = level + "%";
+            $("water").style.height = level + "%";
+            $("levelBar").style.width = level + "%";
+            $("dispensed").textContent = dispensed + " mL";
+            $("start").disabled = running || level <= 0;
+            $("stop").disabled = !running;
+            $("screen").textContent = running ? "DISPENSING" : level <= 0 ? "EMPTY" : "READY";
+        }
+
+        function stopDispensing(message) {
+            running = false;
+
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+
+            $("status").textContent = message;
+            $("status").classList.remove("active");
+            render();
+        }
+
+        $("start").addEventListener("click", () => {
+            if (level <= 0) {
+                stopDispensing("Tank is empty. Refill the tank before dispensing.");
+                return;
+            }
+
+            running = true;
+            $("status").textContent = "Water is dispensing in simulation...";
+            $("status").classList.add("active");
+            render();
+
+            timer = setInterval(() => {
+                if (level <= 0) {
+                    stopDispensing("Tank is empty. Dispensing stopped.");
+                    return;
+                }
+
+                level = Math.max(0, level - 2);
+                dispensed += 100;
+                render();
+
+                if (level === 0) {
+                    stopDispensing("Tank is empty. Dispensing stopped.");
+                }
+            }, 650);
+        });
+
+        $("stop").addEventListener("click", () => {
+            stopDispensing("Dispensing stopped by user.");
+        });
+
+        $("refill").addEventListener("click", () => {
+            stopDispensing("Tank refilled to 100%. Ready for another simulation.");
+            level = 100;
+            dispensed = 0;
+            render();
+        });
+
+        render();
+    </script>
+</body>
+
+</html>
